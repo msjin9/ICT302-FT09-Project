@@ -1,4 +1,4 @@
-# ICT302-FT09-Project
+# Research Project Dashboard
 
 #### Common Dependencies
 
