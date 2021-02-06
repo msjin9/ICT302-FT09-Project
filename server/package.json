@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "node ./src/index.js",
-    "watch": "nodemon --watch src/ --exec npm run serve",
+    "dev": "nodemon --watch src/ --exec npm run serve",
     "lint": "npx eslint . --ext .js,.jsx",
     "fix": "npm run lint -- --fix",
     "format": "npx prettier -w ."
