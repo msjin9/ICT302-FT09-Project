@@ -1,0 +1,55 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  push:
+    paths:
+      - '**'
+      - '!.github/workflows/**'
+      - '.github/workflows/node.js.yml'
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node-version: [10.x, 12.x, 14.x, 15.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install packages (server)
+      working-directory: ${{ runner.workspace }}/server
+      run: npm ci
+
+    - name: Build package (server)
+      working-directory: ${{ runner.workspace }}/server
+      run: npm run build --if-present
+
+    - name: Run test (server)
+      working-directory: ${{ runner.workspace }}/server
+      run: npm test
+
+    - name: Install packages (client)
+      working-directory: ${{ runner.workspace }}/client
+      run: npm ci
+
+    - name: Build package (client)
+      working-directory: ${{ runner.workspace }}/client
+      run: npm run build --if-present
+
+    - name: Run test (client)
+      working-directory: ${{ runner.workspace }}/client
+      run: npm test
