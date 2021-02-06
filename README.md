@@ -13,7 +13,4 @@
   - `eslint-plugin-prettier`
 - `nodemon`
 - `prettier`
-
-##### dependencies
-
-- `dotenv-safe`
+- `jest`
