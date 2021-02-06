@@ -1,0 +1,11 @@
+# npm dependencies
+node_modules/
+
+# babel
+dist/
+
+coverage/
+package-lock.json
+
+# backup src
+src-bak/
