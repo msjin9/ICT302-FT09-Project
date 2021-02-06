@@ -1,0 +1,11 @@
+# nm modules
+node_modules/
+
+# babel
+lib/
+
+# test
+coverage/
+
+# environment variables
+.env
