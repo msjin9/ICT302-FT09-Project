@@ -31,25 +31,25 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - name: Install packages (server)
-      working-directory: $GITHUB_WORKSPACE/server
+      working-directory: ./server
       run: npm ci
 
     - name: Build package (server)
-      working-directory: $GITHUB_WORKSPACE/server
+      working-directory: ./server
       run: npm run build --if-present
 
     - name: Run tests (server)
-      working-directory: $GITHUB_WORKSPACE/server
+      working-directory: ./server
       run: npm test
 
     - name: Install packages (client)
-      working-directory: $GITHUB_WORKSPACE/client
+      working-directory: ./client
       run: npm ci
 
     - name: Build package (client)
-      working-directory: $GITHUB_WORKSPACE/client
+      working-directory: ./client
       run: npm run build --if-present
 
     - name: Run tests (client)
-      working-directory: $GITHUB_WORKSPACE/client
+      working-directory: ./client
       run: npm test
