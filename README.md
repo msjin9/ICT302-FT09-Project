@@ -7,7 +7,7 @@
 ##### devDependencies
 
 - `eslint`
-  - `eslint-config-airbase`
+  - `eslint-config-airbnb`
   - `eslint-config-prettier`
   - `eslint-plugin-import`
   - `eslint-plugin-prettier`
