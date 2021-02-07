@@ -89,4 +89,5 @@ jobs:
       if: contains(matrix.os, 'windows')
       run: |
         Start-Job { Set-Location $using:PWD; npm run serve }
+        Start-Sleep -Seconds 5
         Get-Job | Stop-Job
