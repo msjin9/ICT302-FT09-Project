@@ -25,7 +25,13 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
         node-version: [12.x, 14.x, 15.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        include:
+          - os: ubuntu-latest
+            copy_source: cp -r dist ../server/src/views
+            test_server: npm run serve &; sleep 5; trap 'exit(0)' SIGINT; kill -SIGINT $(lsof -t -i:8080)
+          - os: windows-latest
+            copy_source: Copy-Item -Path "dist" -Destination "..\\server\\src\\views" --Recurse
+            test_server: Start-Job { Set-Location $using:PWD; npm run serve }; Get-Job | Stop-Job
 
     steps:
     - name: Make git use LF
@@ -47,10 +53,6 @@ jobs:
       working-directory: ./server
       run: npm run lint --if-present
 
-    - name: Build package (server)
-      working-directory: ./server
-      run: npm run build --if-present
-
     - name: Run tests (server)
       working-directory: ./server
       run: npm test
@@ -71,5 +73,10 @@ jobs:
       working-directory: ./client
       run: npm test
 
-    - name: Deploy web app
-      run: ./deploy.sh
+    - name: Copy built package to server
+      working-directory: ./client
+      run: ${{ matrix.copy_source }}
+
+    - name: Test web app
+      working-directory: ./server
+      run: ${{ matrix.test_server }}
