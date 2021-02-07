@@ -28,10 +28,8 @@ jobs:
         include:
           - os: ubuntu-latest
             copy_source: cp -r dist ../server/src/views
-            test_server: npm run serve &; sleep 5; trap 'exit(0)' SIGINT; kill -SIGINT $(lsof -t -i:8080)
           - os: windows-latest
             copy_source: Copy-Item -Path "dist" -Destination "..\\server\\src\\views" --Recurse
-            test_server: Start-Job { Set-Location $using:PWD; npm run serve }; Get-Job | Stop-Job
 
     steps:
     - name: Make git use LF
@@ -77,6 +75,16 @@ jobs:
       working-directory: ./client
       run: ${{ matrix.copy_source }}
 
-    - name: Test web app
+    - name: Test web app (linux-only)
       working-directory: ./server
-      run: ${{ matrix.test_server }}
+      run: |
+        npm run serve &
+        sleep 5
+        trap 'exit(0)' SIGINT
+        kill -SIGINT $(lsof -t -i:8080)
+
+    - name: Test web app (windows-only)
+      working-directory: ./server
+      run: |
+        Start-Job { Set-Location $using:PWD; npm run serve }
+        Get-Job | Stop-Job
