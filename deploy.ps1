@@ -8,7 +8,7 @@ cd client
 npm run build
 
 # copy built source to server static source
-Copy-Item -Path "dist" -Destination "..\server\src\views" -Recurse
+robocopy dist ..\server\src\views /MT /E /XD
 
 # go to server source
 cd ../server
