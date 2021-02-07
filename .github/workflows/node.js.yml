@@ -43,6 +43,10 @@ jobs:
       working-directory: ./server
       run: npm ci
 
+    - name: Apply linting to package (server)
+      working-directory: ./server
+      run: npm run lint --if-present
+
     - name: Build package (server)
       working-directory: ./server
       run: npm run build --if-present
@@ -54,6 +58,10 @@ jobs:
     - name: Install packages (client)
       working-directory: ./client
       run: npm ci
+
+    - name: Apply linting to package (client)
+      working-directory: ./client
+      run: npm run lint --if-present
 
     - name: Build package (client)
       working-directory: ./client
