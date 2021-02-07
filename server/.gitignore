@@ -9,3 +9,6 @@ coverage/
 
 # environment variables
 .env
+
+# built frontend
+src/views/
