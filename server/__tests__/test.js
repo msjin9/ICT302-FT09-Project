@@ -1,1 +1,3 @@
-test('Test has completed', () => {});
+describe('Test', () => {
+  it('has completed', () => {});
+});
