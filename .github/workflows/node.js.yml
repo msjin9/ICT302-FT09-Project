@@ -27,9 +27,9 @@ jobs:
         node-version: [12.x, 14.x, 15.x]
         include:
           - os: ubuntu-latest
-            copy_source: cp -r dist ../server/src/views
+            move_built_source: mv dist ../server/src/views
           - os: windows-latest
-            copy_source: Copy-Item -Path "dist" -Destination "..\\server\\src\\views" --Recurse
+            move_built_copy_source: Move-Item -Path "dist" -Destination "..\server\src\views"
 
     steps:
     - name: Make git use LF
@@ -71,9 +71,9 @@ jobs:
       working-directory: ./client
       run: npm test
 
-    - name: Copy built package to server
+    - name: Move built package to server
       working-directory: ./client
-      run: ${{ matrix.copy_source }}
+      run: ${{ matrix.move_built_source }}
 
     - name: Test web app (linux-only)
       working-directory: ./server
