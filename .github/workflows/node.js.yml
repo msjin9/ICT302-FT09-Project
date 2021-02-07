@@ -77,6 +77,7 @@ jobs:
 
     - name: Test web app (linux-only)
       working-directory: ./server
+      if: contains(matrix.os, 'ubuntu')
       run: |
         npm run serve &
         sleep 5
@@ -85,6 +86,7 @@ jobs:
 
     - name: Test web app (windows-only)
       working-directory: ./server
+      if: contains(matrix.os, 'windows')
       run: |
         Start-Job { Set-Location $using:PWD; npm run serve }
         Get-Job | Stop-Job
