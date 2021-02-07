@@ -70,3 +70,6 @@ jobs:
     - name: Run tests (client)
       working-directory: ./client
       run: npm test
+
+    - name: Deploy web app
+      run: ./deploy.sh
