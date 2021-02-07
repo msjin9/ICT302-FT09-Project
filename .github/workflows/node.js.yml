@@ -24,8 +24,12 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        node-version: [10.x, 12.x, 14.x, 15.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [12.x, 14.x, 15.x]
+        include:
+          - os: ubuntu-latest
+            move_built_source: mv dist ../server/src/views
+          - os: windows-latest
+            move_built_copy_source: Move-Item -Path "dist" -Destination "..\server\src\views"
 
     steps:
     - name: Make git use LF
@@ -47,10 +51,6 @@ jobs:
       working-directory: ./server
       run: npm run lint --if-present
 
-    - name: Build package (server)
-      working-directory: ./server
-      run: npm run build --if-present
-
     - name: Run tests (server)
       working-directory: ./server
       run: npm test
@@ -70,3 +70,23 @@ jobs:
     - name: Run tests (client)
       working-directory: ./client
       run: npm test
+
+    - name: Move built package to server
+      working-directory: ./client
+      run: ${{ matrix.move_built_source }}
+
+    - name: Test web app (linux-only)
+      working-directory: ./server
+      if: contains(matrix.os, 'ubuntu')
+      run: |
+        npm run serve &
+        sleep 5
+        trap 'exit(0)' SIGINT
+        kill -SIGINT $(lsof -t -i:8080)
+
+    - name: Test web app (windows-only)
+      working-directory: ./server
+      if: contains(matrix.os, 'windows')
+      run: |
+        Start-Job { Set-Location $using:PWD; npm run serve }
+        Get-Job | Stop-Job
