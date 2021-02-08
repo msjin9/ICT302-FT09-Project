@@ -6,5 +6,5 @@ dist/
 
 coverage/
 
-# npm lockfile
-package-lock.json
+# yarn lockfile
+yarn.lock
