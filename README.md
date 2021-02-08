@@ -44,7 +44,7 @@ from
 ```jsonc
  "scripts": {
     "serve": "node ./src/index.js",
-		// ...
+    // ...
   },
 ```
 
@@ -53,7 +53,7 @@ to
 ```jsonc
  "scripts": {
     "serve": "node --experimental-modules ./src/index.js",
-		// ...
+    // ...
   },
 ```
 
