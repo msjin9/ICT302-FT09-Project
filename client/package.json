@@ -32,20 +32,6 @@
     "prettier": "^1.19.1",
     "vue-template-compiler": "^2.6.12"
   },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/vue3-essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {}
-  },
   "browserslist": [
     "> 0.25%",
     "not ie 11",
