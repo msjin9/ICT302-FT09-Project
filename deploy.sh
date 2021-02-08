@@ -13,6 +13,7 @@ if [ $YARN_INSTALLED ]; then
     # generate yarn.lock
     yarn import || exit 1
   fi
+
   # install dependencies
   yarn > /dev/null || exit 1
   # transpile client source with babel
@@ -32,6 +33,7 @@ if [ $YARN_INSTALLED ]; then
     # generate yarn.lock
     yarn import || exit 1
   fi
+
   # install dependencies
   yarn > /dev/null || exit 1
   # run server
