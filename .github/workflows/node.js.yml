@@ -15,14 +15,6 @@ on:
       - '!**.md'
   pull_request:
     branches: [ main ]
-    paths:
-      - '**'
-      # ignore changes to github/workflows
-      - '!.github/workflows/**'
-      # activate GitHub Actions when this file is edited
-      - '.github/workflows/node.js.yml'
-      # ignore markdown
-      - '!**.md'
 
 jobs:
   build:
