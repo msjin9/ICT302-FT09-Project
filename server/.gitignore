@@ -7,6 +7,9 @@ lib/
 # test
 coverage/
 
+# npm lockfile
+package-lock.json
+
 # environment variables
 .env
 
