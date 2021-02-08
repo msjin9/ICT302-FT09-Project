@@ -68,7 +68,7 @@ jobs:
     - name: Install packages (server)
       working-directory: ./server
       if: steps.yarn-cache.outputs.cache-hit != 'true'
-      run: yarn --prefer-offline
+      run: yarn
 
     - name: Apply linting to package (server)
       working-directory: ./server
@@ -81,7 +81,7 @@ jobs:
     - name: Install packages (client)
       working-directory: ./client
       if: steps.yarn-cache.outputs.cache-hit != 'true'
-      run: yarn --prefer-offline
+      run: yarn
 
     - name: Apply linting to package (client)
       working-directory: ./client
