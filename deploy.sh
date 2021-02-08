@@ -6,6 +6,9 @@ cd "$(dirname "$0")"
 # go to client source
 cd client
 
+# install dependencies
+npm ci
+
 # transpile client source with babel
 npm run build
 
@@ -14,6 +17,9 @@ cp -r dist ../server/src/views
 
 # go to server source
 cd ../server
+
+# install dependencies
+npm ci
 
 # run server
 npm run serve
