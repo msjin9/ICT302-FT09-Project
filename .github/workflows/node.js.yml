@@ -27,9 +27,9 @@ jobs:
         node-version: [12.x, 14.x, 15.x]
         include:
           - os: ubuntu-latest
-            move_built_source: mv dist ../server/src/views
+            move-built-source: mv "dist" "../server/src/views"
           - os: windows-latest
-            move_built_copy_source: Move-Item -Path "dist" -Destination "..\server\src\views"
+            move-built-source: move "dist" "..\server\src\views"
 
     steps:
     - name: Make git use LF
@@ -38,48 +38,72 @@ jobs:
         git config --global core.eol lf
 
     - uses: actions/checkout@v2
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
 
+		- name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+
+    - name: Generate yarn.lock (server)
+      working-directory: ./server
+      run: yarn import
+
+    - name: Generate yarn.lock (client)
+      working-directory: ./client
+      run: yarn import
+
+    - name: Cache yarn dependencies
+      id: yarn-cache
+      uses: actions/cache@v2
+      with:
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+
     - name: Install packages (server)
       working-directory: ./server
-      run: npm ci
+      if: steps:yarn-cache.outputs.cache-hit != 'true'
+      run: yarn --prefer-offline
 
     - name: Apply linting to package (server)
       working-directory: ./server
-      run: npm run lint --if-present
+      run: yarn lint --if-present
 
     - name: Run tests (server)
       working-directory: ./server
-      run: npm test
+      run: yarn test
 
     - name: Install packages (client)
       working-directory: ./client
-      run: npm ci
+      if: steps:yarn-cache.outputs.cache-hit != 'true'
+      run: yarn --prefer-offline
 
     - name: Apply linting to package (client)
       working-directory: ./client
-      run: npm run lint --if-present
+      run: yarn lint --if-present
 
     - name: Build package (client)
       working-directory: ./client
-      run: npm run build --if-present
+      run: yarn build --if-present
 
     - name: Run tests (client)
       working-directory: ./client
-      run: npm test
+      run: yarn test
 
     - name: Move built package to server
       working-directory: ./client
-      run: ${{ matrix.move_built_source }}
+      run: ${{ matrix.move-built-source }}
 
     - name: Test web app (linux-only)
       working-directory: ./server
       if: contains(matrix.os, 'ubuntu')
       run: |
-        npm run serve &
+        yarn serve &
         sleep 5
         trap 'exit(0)' SIGINT
         kill -SIGINT $(lsof -t -i:8080)
@@ -88,6 +112,6 @@ jobs:
       working-directory: ./server
       if: contains(matrix.os, 'windows')
       run: |
-        Start-Job { Set-Location $using:PWD; npm run serve }
+        Start-Job { Set-Location $using:PWD; yarn serve }
         Start-Sleep -Seconds 5
         Get-Job | Stop-Job
