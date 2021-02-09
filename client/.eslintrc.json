@@ -8,7 +8,7 @@
     "jest/globals": true
   },
   "extends": [
-    "airbnb/base",
+    "airbnb-base",
     "plugin:vue/vue3-recommended",
     "plugin:jest/recommended",
     "eslint:recommended"
