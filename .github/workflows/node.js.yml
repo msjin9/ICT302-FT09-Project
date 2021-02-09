@@ -52,12 +52,9 @@ jobs:
       working-directory: ./server
       run: yarn import
 
-    - name: Generate yarn.lock (client)
-      working-directory: ./client
-      run: yarn import
-
-    - name: Cache yarn dependencies
-      id: yarn-cache
+    - name: Cache yarn dependencies (server)
+      id: yarn-cache-server
+      working-directory: ./server
       uses: actions/cache@v2
       with:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -67,7 +64,7 @@ jobs:
 
     - name: Install packages (server)
       working-directory: ./server
-      if: steps.yarn-cache.outputs.cache-hit != 'true'
+      if: steps.yarn-cache-server.outputs.cache-hit != 'true'
       run: yarn
 
     - name: Apply linting to package (server)
@@ -78,9 +75,23 @@ jobs:
       working-directory: ./server
       run: yarn test
 
+    - name: Generate yarn.lock (client)
+      working-directory: ./client
+      run: yarn import
+
+    - name: Cache yarn dependencies (server)
+      id: yarn-cache-client
+      working-directory: ./client
+      uses: actions/cache@v2
+      with:
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+
     - name: Install packages (client)
       working-directory: ./client
-      if: steps.yarn-cache.outputs.cache-hit != 'true'
+      if: steps.yarn-cache-client.outputs.cache-hit != 'true'
       run: yarn
 
     - name: Apply linting to package (client)
