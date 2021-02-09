@@ -54,11 +54,10 @@ jobs:
 
     - name: Cache yarn dependencies (server)
       id: yarn-cache-server
-      working-directory: ./server
       uses: actions/cache@v2
       with:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('./server/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-yarn-
 
@@ -81,11 +80,10 @@ jobs:
 
     - name: Cache yarn dependencies (server)
       id: yarn-cache-client
-      working-directory: ./client
       uses: actions/cache@v2
       with:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('./client/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-yarn-
 
