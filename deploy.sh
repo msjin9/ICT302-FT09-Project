@@ -1,25 +1,44 @@
 #!/bin/sh
 
+# check if yarn is insdtalled
+YARN_INSTALLED=$(which yarn)
+
 # change working directory to the script directory
 cd "$(dirname "$0")"
 
-# go to client source
 cd client
 
-# install dependencies
-npm ci
+if [ $YARN_INSTALLED ]; then
+  if [ ! -f yarn.lock ]; then
+    # generate yarn.lock
+    yarn import || exit 1
+  fi
 
-# transpile client source with babel
-npm run build
+  # install dependencies
+  yarn > /dev/null || exit 1
+  # transpile client source with babel
+  yarn build > /dev/null || exit 1
+else
+  npm install > /dev/null || exit 1
+  npm run build > /dev/null || exit 1
+fi
 
 # copy built source to server static source
-cp -r dist ../server/src/views
+cp -r "dist" "../server/src/views"
 
-# go to server source
 cd ../server
 
-# install dependencies
-npm ci
+if [ $YARN_INSTALLED ]; then
+  if [ ! -f yarn.lock ]; then
+    # generate yarn.lock
+    yarn import || exit 1
+  fi
 
-# run server
-npm run serve
+  # install dependencies
+  yarn > /dev/null || exit 1
+  # run server
+  yarn serve || exit 1
+else
+  npm install > /dev/null || exit 1
+  npm run serve || exit 1
+fi

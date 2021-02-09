@@ -1,14 +1,14 @@
 {
-  "name": "ict302-ft09-project-server",
+  "name": "server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "serve": "node ./src/index.js",
     "dev": "nodemon --watch src/ --exec npm run serve",
-    "lint": "npx eslint . --ext .js,.jsx",
-    "fix": "npm run lint -- --fix",
-    "format": "npx prettier -w .",
+    "lint": "yarn eslint . --ext .js,.jsx",
+    "fix": "yarn lint -- --fix",
+    "format": "yarn prettier -w .",
     "test": "jest"
   },
   "keywords": [],
@@ -16,7 +16,7 @@
   "license": "ISC",
   "devDependencies": {
     "eslint": "^7.19.0",
-    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.1.3",
