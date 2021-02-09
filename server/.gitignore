@@ -7,8 +7,8 @@ lib/
 # test
 coverage/
 
-# yarn lockfile
-yarn.lock
+# npm lockfile
+package-lock.json
 
 # environment variables
 .env
