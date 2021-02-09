@@ -44,14 +44,20 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Generate yarn.lock (server)
-      working-directory: ./server
-      run: yarn import
+    - name: Get yarn cache directory
+      id: yarn-cache-dir-path
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+
+    - name: Query yarn cache
+      uses: actions/cache@v2
+      id: yarn-cache
+      with:
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ matrix.node-version }}-${{ hashFiles('**/yarn.lock') }}
 
     - name: Install packages (server)
       working-directory: ./server
-      if: steps.yarn-cache-server.outputs.cache-hit != 'true'
-      run: yarn install --check-files --frozen-lockfile
+      run: yarn install --prefer-offline --frozen-lockfile
 
     - name: Apply linting to package (server)
       working-directory: ./server
@@ -61,14 +67,9 @@ jobs:
       working-directory: ./server
       run: yarn test
 
-    - name: Generate yarn.lock (client)
-      working-directory: ./client
-      run: yarn import
-
     - name: Install packages (client)
       working-directory: ./client
-      if: steps.yarn-cache-client.outputs.cache-hit != 'true'
-      run: yarn install --check-files --frozen-lockfile
+      run: yarn install --prefer-offline --frozen-lockfile
 
     - name: Apply linting to package (client)
       working-directory: ./client
