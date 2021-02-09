@@ -1,5 +1,5 @@
 {
-  "name": "ict302-ft09-project-server",
+  "name": "server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -16,9 +16,8 @@
   "license": "ISC",
   "devDependencies": {
     "eslint": "^7.19.0",
-    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^7.2.0",
-    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.1.3",
     "eslint-plugin-prettier": "^3.3.1",
     "jest": "^26.6.3",
