@@ -9,13 +9,8 @@ cd "$(dirname "$0")"
 cd client
 
 if [ $YARN_INSTALLED ]; then
-  if [ ! -f yarn.lock ]; then
-    # generate yarn.lock
-    yarn import || exit 1
-  fi
-
   # install dependencies
-  yarn > /dev/null || exit 1
+  yarn --frozen-lock > /dev/null || exit 1
   # transpile client source with babel
   yarn build > /dev/null || exit 1
 else
@@ -29,13 +24,8 @@ cp -r "dist" "../server/src/views"
 cd ../server
 
 if [ $YARN_INSTALLED ]; then
-  if [ ! -f yarn.lock ]; then
-    # generate yarn.lock
-    yarn import || exit 1
-  fi
-
   # install dependencies
-  yarn > /dev/null || exit 1
+  yarn --frozen-lock > /dev/null || exit 1
   # run server
   yarn serve || exit 1
 else

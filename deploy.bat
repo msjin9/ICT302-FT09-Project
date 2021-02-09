@@ -12,13 +12,8 @@ cd %~dp0
 cd client
 
 if %has_yarn% equ 1 (
-    if not exist "yarn.lock" (
-        REM  generate yarn.lock
-        yarn import > nul || goto :error
-    )
-
     REM  install dependencies
-    call yarn > nul || goto :error
+    call yarn --frozen-lock > nul || goto :error
 
     REM  transpile client source with babel
     call yarn build > nul || goto :error
@@ -44,12 +39,7 @@ if %copy_res% geq 8 (
 cd ../server
 
 if %has_yarn% equ 1 (
-    if not exist "yarn.lock" (
-        REM  generate yarn.lock
-        yarn import > nul || goto :error
-    )
-
-    call yarn > nul || goto :error
+    call yarn --frozen-lock > nul || goto :error
 
     REM  run server
     call yarn serve || goto :error
