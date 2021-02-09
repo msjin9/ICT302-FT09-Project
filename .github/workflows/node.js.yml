@@ -51,7 +51,7 @@ jobs:
     - name: Install packages (server)
       working-directory: ./server
       if: steps.yarn-cache-server.outputs.cache-hit != 'true'
-      run: yarn
+      run: yarn install --check-files --frozen-lockfile
 
     - name: Apply linting to package (server)
       working-directory: ./server
@@ -68,7 +68,7 @@ jobs:
     - name: Install packages (client)
       working-directory: ./client
       if: steps.yarn-cache-client.outputs.cache-hit != 'true'
-      run: yarn
+      run: yarn install --check-files --frozen-lockfile
 
     - name: Apply linting to package (client)
       working-directory: ./client
