@@ -6,7 +6,10 @@ import cors from 'cors';
 import morgan from 'morgan';
 import dotenvSafe from 'dotenv-safe';
 
-dotenvSafe.config();
+dotenvSafe.config({
+  allowEmptyValues: true,
+  example: process.env.CI ? '.env.ci.example' : '.env.example',
+});
 
 const currentDir = dirname(fileURLToPath(import.meta.url));
 const frontPath = resolve(currentDir, 'views/');
