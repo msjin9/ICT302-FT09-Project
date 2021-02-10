@@ -4,6 +4,9 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import morgan from 'morgan';
+import dotenvSafe from 'dotenv-safe';
+
+dotenvSafe.config();
 
 const currentDir = dirname(fileURLToPath(import.meta.url));
 const frontPath = resolve(currentDir, 'views/');
