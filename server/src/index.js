@@ -8,7 +8,8 @@ import dotenvSafe from 'dotenv-safe';
 
 dotenvSafe.config({
   allowEmptyValues: true,
-  example: process.env.CI ? '.env.ci.example' : '.env.example',
+  path: process.env.CI ? '../ci/.env' : '.env',
+  example: process.env.CI ? '../ci/.env.ci.example' : '.env.example',
 });
 
 const currentDir = dirname(fileURLToPath(import.meta.url));
