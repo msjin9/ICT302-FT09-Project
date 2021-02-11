@@ -4,6 +4,13 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import morgan from 'morgan';
+import dotenvSafe from 'dotenv-safe';
+
+dotenvSafe.config({
+  allowEmptyValues: true,
+  path: process.env.CI ? '../ci/.env' : '.env',
+  example: process.env.CI ? '../ci/.env.ci.example' : '.env.example',
+});
 
 const currentDir = dirname(fileURLToPath(import.meta.url));
 const frontPath = resolve(currentDir, 'views/');
