@@ -35,30 +35,6 @@ run the following command in either the command prompt (`cmd`) or powershell:
 .\deploy.bat
 ```
 
-### Remarks
-
-If you are using `12.17.0 > nodejs >= 12.0.0`, edit `server/package.json` as below:
-
-from
-
-```jsonc
- "scripts": {
-    "serve": "node ./src/index.js",
-    // ...
-  },
-```
-
-to
-
-```jsonc
- "scripts": {
-    "serve": "node --experimental-modules ./src/index.js",
-    // ...
-  },
-```
-
-Add `--experimental-modules` flag.
-
 ## <a name="dependencies"></a> Dependencies
 
 > Dependencies that are commonly found in client and server.
