@@ -1,19 +1,16 @@
-import { dirname, resolve } from 'path';
-import { fileURLToPath } from 'url';
-import express from 'express';
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import morgan from 'morgan';
-import dotenvSafe from 'dotenv-safe';
+const path = require('path');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const morgan = require('morgan');
 
-dotenvSafe.config({
+require('dotenv-safe').config({
   allowEmptyValues: true,
   path: process.env.CI ? '../ci/.env' : '.env',
   example: process.env.CI ? '../ci/.env.ci.example' : '.env.example',
 });
 
-const currentDir = dirname(fileURLToPath(import.meta.url));
-const frontPath = resolve(currentDir, 'views/');
+const frontPath = path.resolve(__dirname, 'views/');
 const app = express();
 
 const corsOptions = {
@@ -27,7 +24,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-  res.sendFile(resolve(frontPath, 'index.html'));
+  res.sendFile(path.resolve(frontPath, 'index.html'));
 });
 
 const PORT = process.env.PORT || 8080;

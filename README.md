@@ -13,8 +13,8 @@ A dashboard web application developed to facilitate research project management.
 
 ## <a name="system-requirements"></a> System Requirements
 
-- `nodejs >= 12.0.0`
-- `npm >= 6.9.0` or `yarn` (preferably)
+- `nodejs >= 10.14.2`
+- `npm >= 6.4.1` or `yarn` (preferably)
 
 ## <a name="usage"></a> Usage
 
@@ -34,30 +34,6 @@ run the following command in either the command prompt (`cmd`) or powershell:
 ```
 .\deploy.bat
 ```
-
-### Remarks
-
-If you are using `12.17.0 > nodejs >= 12.0.0`, edit `server/package.json` as below:
-
-from
-
-```jsonc
- "scripts": {
-    "serve": "node ./src/index.js",
-    // ...
-  },
-```
-
-to
-
-```jsonc
- "scripts": {
-    "serve": "node --experimental-modules ./src/index.js",
-    // ...
-  },
-```
-
-Add `--experimental-modules` flag.
 
 ## <a name="dependencies"></a> Dependencies
 

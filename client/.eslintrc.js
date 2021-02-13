@@ -26,12 +26,12 @@ module.exports = {
       'error',
       'ignorePackages',
       {
-        js: 'always',
-        mjs: 'always',
-        jsx: 'always',
-        ts: 'always',
-        tsx: 'always',
-        vue: 'always',
+        js: 'never',
+        mjs: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+        vue: 'never',
       },
     ],
     quotes: [
