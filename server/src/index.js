@@ -1,7 +1,6 @@
 const path = require('path');
 const express = require('express');
 const compression = require('compression');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
 
@@ -20,11 +19,11 @@ const corsOptions = {
 };
 
 app.use(express.static(frontPath));
+app.use(express.json());
 app.use(compression());
 app.use(morgan('combined'));
 app.use(cors(corsOptions));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(frontPath, 'index.html'));
