@@ -1,3 +1,4 @@
+const path = require('path');
 const { merge } = require('webpack-merge');
 const { DefinePlugin } = require('webpack');
 const common = require('./webpack.common.js');
@@ -11,5 +12,10 @@ module.exports = merge(common, {
         BASE_URL: '"/"'
       }
     })
-  ]
+  ],
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 8080
+  }
 });
