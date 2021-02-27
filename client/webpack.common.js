@@ -4,17 +4,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: {
-    app: './src/index.js'
-  },
-  node: {
-    setImmediate: false,
-    process: 'mock',
-    dgram: 'empty',
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty',
-    child_process: 'empty'
+  resolve: {
+    fallback: {
+      dgram: false,
+      fs: false,
+      net: false,
+      tls: false,
+      child_process: false
+    }
   },
   output: {
     path: path.resolve(__dirname, 'src'),
@@ -28,58 +25,53 @@ module.exports = {
     },
     extensions: ['.mjs', '.js', '.jsx', '.json', '.wasm'],
     modules: ['node_modules'],
-    plugins: [{}]
+    plugins: [
+      new CaseSensitivePathsPlugin(),
+      new HtmlWebpackPlugin({
+        title: 'client',
+        templateParameters: function() {},
+        template: 'public/index.html'
+      }),
+      new CopyPlugin([
+        {
+          patterns: [
+            {
+              from: 'public',
+              to: 'dist',
+              toType: 'dir',
+              globOptions: {
+                ignore: [
+                  '.DS_Store',
+                  {
+                    glob: 'index.html',
+                    matchBase: false
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ])
+    ]
   },
   resolveLoader: {
     modules: ['node_modules'],
-    plugins: [{}]
+    extensions: ['.js', '.json']
   },
+  cache: true,
   module: {
     rules: [
       {
         test: /\.(svg)(\?.*)?$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: 'img/[name].[hash:8].[ext]'
-            }
-          }
-        ]
+        type: 'asset/resource'
       },
       {
         test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 4096,
-              fallback: {
-                loader: 'file-loader',
-                options: {
-                  name: 'media/[name].[hash:8].[ext]'
-                }
-              }
-            }
-          }
-        ]
+        type: 'asset/inline'
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 4096,
-              fallback: {
-                loader: 'file-loader',
-                options: {
-                  name: 'fonts/[name].[hash:8].[ext]'
-                }
-              }
-            }
-          }
-        ]
+        type: 'asset/inline'
       },
       {
         test: /\.css$/,
@@ -146,70 +138,6 @@ module.exports = {
           reuseExistingChunk: true
         }
       }
-    },
-    minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          compress: {
-            arrows: false,
-            collapse_vars: false,
-            comparisons: false,
-            computed_props: false,
-            hoist_funs: false,
-            hoist_props: false,
-            hoist_vars: false,
-            inline: false,
-            loops: false,
-            negate_iife: false,
-            properties: false,
-            reduce_funcs: false,
-            reduce_vars: false,
-            switches: false,
-            toplevel: false,
-            typeofs: false,
-            booleans: true,
-            if_return: true,
-            sequences: true,
-            unused: true,
-            conditionals: true,
-            dead_code: true,
-            evaluate: true
-          },
-          mangle: {
-            safari10: true
-          }
-        },
-        sourceMap: true,
-        cache: true,
-        parallel: true,
-        extractComments: false
-      })
-    ]
-  },
-  plugins: [
-    new CaseSensitivePathsPlugin(),
-    new FriendlyErrorsWebpackPlugin({
-      additionalTransformers: [function() {}],
-      additionalFormatters: [function() {}]
-    }),
-    new HtmlWebpackPlugin({
-      title: 'client',
-      templateParameters: function() {},
-      template: 'public/index.html'
-    }),
-    new CopyPlugin([
-      {
-        from: 'public',
-        to: 'dist',
-        toType: 'dir',
-        ignore: [
-          '.DS_Store',
-          {
-            glob: 'index.html',
-            matchBase: false
-          }
-        ]
-      }
-    ])
-  ]
+    }
+  }
 };
