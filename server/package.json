@@ -5,17 +5,17 @@
   "main": "index.js",
   "scripts": {
     "serve": "node ./src/index.js",
-    "dev": "nodemon --watch src/ --exec npm run serve",
+    "dev": "nodemon --watch src --exec npm run serve",
     "lint": "yarn eslint . --ext .js,.jsx",
-    "fix": "yarn lint -- --fix",
-    "format": "yarn prettier -w src/** __tests__/**",
+    "fix": "yarn lint --fix",
+    "format": "yarn prettier -w src/** tests/**",
     "test": "jest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^7.19.0",
+    "eslint": "^7.21.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-import": "^2.22.1",
@@ -30,6 +30,8 @@
     "cors": "^2.8.5",
     "dotenv-safe": "^8.2.0",
     "express": "^4.17.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.5.0"
   }
 }
