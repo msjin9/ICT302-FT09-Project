@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "webpack serve --open --config webpack.development.js",
+    "serve": "webpack serve --config webpack.development.js",
     "build": "webpack --config webpack.production.js",
+    "watch": "webpack --watch --config webpack.development.js",
     "lint": "yarn eslint . --ext .js",
+    "fix": "yarn lint --fix",
+    "format": "yarn prettier --write src/** tests/**",
     "test": "yarn jest"
   },
   "dependencies": {
@@ -16,6 +19,7 @@
   "devDependencies": {
     "@babel/cli": "^7.13.0",
     "@babel/core": "^7.13.1",
+    "@babel/preset-env": "^7.13.8",
     "babel-loader": "^8.2.2",
     "case-sensitive-paths-webpack-plugin": "^2.4.0",
     "copy-webpack-plugin": "^7.0.0",
