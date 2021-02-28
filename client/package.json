@@ -9,12 +9,11 @@
     "lint": "yarn eslint . --ext .js",
     "fix": "yarn lint --fix",
     "format": "yarn prettier --write src/** tests/**",
-    "test": "yarn jest"
+    "test": "jest"
   },
   "dependencies": {
     "axios": "^0.21.1",
-    "core-js": "^3.6.5",
-    "jest": "^26.6.3"
+    "core-js": "^3.6.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.0",
@@ -31,6 +30,7 @@
     "eslint-plugin-jest": "^24.1.3",
     "eslint-plugin-prettier": "^3.3.1",
     "html-webpack-plugin": "^5.2.0",
+    "jest": "^26.6.3",
     "mini-css-extract-plugin": "^1.3.9",
     "prettier": "^1.19.1",
     "terser-webpack-plugin": "^5.1.1",
