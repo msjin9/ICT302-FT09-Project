@@ -8,7 +8,7 @@
     "dev": "nodemon --watch src/ --exec npm run serve",
     "lint": "yarn eslint . --ext .js,.jsx",
     "fix": "yarn lint -- --fix",
-    "format": "yarn prettier -w .",
+    "format": "yarn prettier -w src/** __tests__/**",
     "test": "jest"
   },
   "keywords": [],
